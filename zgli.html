@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+    <title>Gra</title>
+    <style>
+        table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #lp {
+            width: 300px;
+            height: 50px;
+            font-size: 30px;
+            background-color: chartreuse;
+
+        }
+
+        #czas {
+            width: 300px;
+            height: 50px;
+            font-size: 30px;
+            background-color: chartreuse;
+
+        }
+
+        #czasl {
+            width: 150px;
+            height: 45px;
+            font-size: 30px;
+            background-color: chartreuse;
+            text-align: center;
+        }
+
+        #cs {
+            width: 300px;
+            height: 45px;
+            font-size: 30px;
+            background-color: chartreuse;
+        }
+
+        #lpl {
+            width: 60px;
+            height: 45px;
+            font-size: 30px;
+            background-color: chartreuse;
+            text-align: center;
+        }
+
+
+        #start {
+            width: 300px;
+            height: 50px;
+            font-size: 30px;
+            background-color: chartreuse;
+        }
+
+        #sprawdzi {
+            width: 300px;
+            height: 50px;
+            font-size: 30px;
+            background-color: chartreuse;
+        }
+
+        #liczba {
+            width: 300px;
+            height: 45px;
+            font-size: 30px;
+            background-color: chartreuse;
+        }
+
+        th {
+            font-size: 50px;
+
+        }
+
+        #p {
+            font-size: 200px;
+            position: relative;
+            top: 20%;
+            left: 28%;
+            opacity: 0.00;
+            background-color: darkorange;
+        }
+
+        body {
+            background-color: brown
+        }
+
+        #w {
+            opacity: 0.01;
+
+        }
+
+        #m {
+            opacity: 0.01;
+        }
+
+    </style>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        var a;
+        var b = 0;
+        var c = 0;
+        var min = 0;
+        var s = 0;
+        var cykl;
+        var nm = 0;
+        var ns = 0;
+        var np = 0;
+        $(document).ready(function() {
+
+
+
+
+            $("#start").click(function() {
+                a = Math.floor(Math.random() * 100 + 1);
+                $("#start").prop("disabled", true);
+                $("#p").animate({
+                    opacity: 0.01
+                }, 1300, "swing");
+                b = 0;
+                $("#lpl").val(b);
+                min = 0;
+                s = 0;
+
+                cykl = setInterval(function() {
+                    s++;
+                    if (s == 60) {
+                        s = 0;
+                        min++
+                    }
+                    $("#czasl").val(min + ":" + s);
+                }, 1000);
+
+
+            });
+            $("#sprawdzi").click(function() {
+                if ($("#liczba").val() > a) {
+                    //alert("Liczba > szukana");
+                    $("#m").animate({
+                        opacity: 1
+                    }, 1300, "swing");
+                    $("#m").animate({
+                        opacity: 0.01
+                    }, 1300, "swing");
+                    b++;
+                    $("#lpl").val(b);
+                }
+                if ($("#liczba").val() < a) {
+                    //alert("Liczba < szukana");
+                    $("#w").animate({
+                        opacity: 1
+                    }, 1300, "swing");
+                    $("#w").animate({
+                        opacity: 0.0
+                    }, 1300, "swing");
+                    b++;
+                    $("#lpl").val(b);
+
+                }
+                if ($("#liczba").val() == a) {
+                    $("#start").prop("disabled", false);
+                    //alert("Zgadłeś! Szukana liczba to " + a );
+                    $("#p").animate({
+                        opacity: 1
+                    }, 1300, "swing");
+                    b++;
+                    clearInterval(cykl);
+                    $("#lpl").val(b);
+                    c++;
+                    if (b < np||np==0) {
+                        np = b;
+                    }
+                    if (min < nm || nm == 0) {
+                        nm = min;
+                        ns = s;
+                    } else if (s < ns || ns == 0) {
+                        nm = min;
+                        ns = s;
+
+                    }
+
+                }
+
+            });
+            $("#cs").click(function() {
+
+                alert("Liczba zgadnietych: " + c + " " + "Najmniej prób: " + np + " " + " Najmniejszy czas: " + nm + ":" + ns);
+
+
+
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <header><button id="czas">Czas:</button><input disabled=true type="text" id="czasl" value="0:0"><br><button id="lp">Liczba prób:</button><input disabled=true type="text" id="lpl" value="0">
+        <table>
+            <tr>
+                <th colspan="2"><a id="w">Wieksza!!</a></th>
+                <th colspan="2"><button id="start">Losowanie liczby</button></th>
+                <th colspan="2"><a id="m">Mniejsza!!</a></th>
+            </tr>
+            <tr>
+                <th colspan="2"><button id="sprawdzi">Sprawdzi</button></th>
+                <th colspan="2"><input id="liczba" type="number" name="liczba" min="1" max="100" value="0"></th>
+                <th colspan="2"><button id="cs">Wyniki:</button></th>
+            </tr>
+
+        </table>
+    </header>
+    <main>
+        <a id="p">Wygrana!!</a>
+    </main>
+    <footer></footer>
+
+</body>
+
+</html>
